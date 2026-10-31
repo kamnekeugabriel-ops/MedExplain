@@ -1,0 +1,73 @@
+:root {
+  --bg: #f1f8f8; --glow: #0e8f9a24; --surface: #ffffff; --line: #0b2a3322;
+  --ink: #0b2a33; --muted: #4d6b73; --accent: #0e8f9a; --on-accent: #ffffff;
+  --alert: #c8372d; --alert-bg: #c8372d12; --ok: #12805c;
+  font-family: "Sora Variable", system-ui, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #061a21; --glow: #38d3db22; --surface: #0c2a33; --line: #38d3db2e;
+  --ink: #e6f4f5; --muted: #8fb3b9; --accent: #38d3db; --on-accent: #04212a;
+  --alert: #ff7b72; --alert-bg: #ff7b7218; --ok: #4ad9a4;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; color: var(--ink); line-height: 1.55;
+  background: radial-gradient(60rem 22rem at 50% -6rem, var(--glow), transparent) var(--bg);
+  min-height: 100vh;
+}
+.app {
+  max-width: 42rem; margin: 0 auto; display: grid; gap: 1rem;
+  padding: calc(1.2rem + env(safe-area-inset-top)) 1.1rem calc(2rem + env(safe-area-inset-bottom));
+}
+.top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+h1 { margin: 0; font-size: 1.9rem; font-weight: 700; letter-spacing: -0.03em; }
+.tagline { margin: 0.1rem 0 0; color: var(--muted); font-size: 0.95rem; }
+.tools { display: flex; gap: 0.5rem; }
+button { font: inherit; cursor: pointer; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 0.65rem 1.1rem; }
+button.icon { width: 2.6rem; height: 2.6rem; padding: 0; display: grid; place-items: center; font-size: 0.8rem; font-weight: 600; }
+button.primary { background: var(--accent); color: var(--on-accent); border-color: transparent; font-weight: 600; }
+button.ghost { background: transparent; }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.pulse { width: 100%; height: 2.4rem; }
+.pulse path { fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.pulse .base { stroke: var(--line); }
+.pulse .beat { stroke: var(--accent); stroke-dasharray: 0 100; }
+.pulse.active .beat { stroke-dasharray: 22 78; animation: beat 1.6s linear infinite; filter: drop-shadow(0 0 4px var(--accent)); }
+@keyframes beat { from { stroke-dashoffset: 22; } to { stroke-dashoffset: -78; } }
+
+.status { margin: 0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; color: var(--muted); }
+.dot { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--muted); }
+.status.ready .dot { background: var(--ok); box-shadow: 0 0 0 4px #12805c22; }
+.status.offline .dot, .status.no-model .dot { background: var(--alert); }
+
+.field { display: grid; gap: 0.35rem; font-size: 0.88rem; color: var(--muted); }
+select, textarea {
+  font: inherit; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 12px; padding: 0.7rem 0.85rem; width: 100%;
+}
+textarea { border-radius: 18px; resize: vertical; min-height: 9rem; }
+textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--glow); }
+.row { display: flex; gap: 0.6rem; }
+
+.wait { margin: 0; color: var(--muted); font-size: 0.92rem; }
+.error { color: var(--alert); margin: 0; }
+.output { white-space: pre-wrap; word-break: break-word; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0.8rem; }
+
+.result { display: grid; gap: 0.9rem; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 1rem 1.1rem; border-left: 3px solid var(--accent); }
+.panel.alert { border-left-color: var(--alert); background: linear-gradient(var(--alert-bg), var(--alert-bg)), var(--surface); }
+.panel h2 { margin: 0 0 0.45rem; font-size: 1.02rem; font-weight: 600; }
+.panel p, .panel ul, .panel dl { margin: 0; }
+.panel ul { padding-left: 1.1rem; }
+dt { font-weight: 600; }
+dd { margin: 0 0 0.6rem; color: var(--muted); }
+.med { display: grid; gap: 0.3rem; padding: 0.6rem 0; border-top: 1px solid var(--line); }
+.med:first-of-type { border-top: 0; }
+.chip { justify-self: start; font-size: 0.82rem; padding: 0.15rem 0.7rem; border-radius: 999px; background: var(--glow); color: var(--accent); }
+.disclaimer { font-size: 0.82rem; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse.active .beat { animation: none; stroke-dasharray: 100 0; }
+}
